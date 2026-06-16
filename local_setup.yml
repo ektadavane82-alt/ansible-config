@@ -1,0 +1,22 @@
+---
+- name: Pull Model Execution via GitHub
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Ensure Apache Web Server is installed
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Create a custom landing page
+      copy:
+        content: "<h1>Hello! This server was configured via ansible-pull from GitHub!</h1>"
+        dest: /var/www/html/index.html
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
